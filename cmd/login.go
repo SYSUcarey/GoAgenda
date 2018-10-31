@@ -27,14 +27,19 @@ var loginCmd = &cobra.Command{
 	Long: 
 	`
 GoAgenda login -u username -p password
-各个参数分别对应:
+
+	各个参数分别对应:
 	-u 用户名
 	-p 用户密码
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//cmd.Help()
+		// 获取参数值
 		username, _ := cmd.Flags().GetString("user")
-		fmt.Println("login called by " + username)
+		password, _ := cmd.Flags().GetString("pass")
+		// 处理参数
+		fmt.Println("login called by ")
+		fmt.Println("username: " + username)
+		fmt.Println("password: " + password)
 	},
 }
 
