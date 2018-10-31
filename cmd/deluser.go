@@ -23,13 +23,12 @@ import (
 // deluserCmd represents the deluser command
 var deluserCmd = &cobra.Command{
 	Use:   "deluser",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "删除本用户",
+	Long: `
+GoAgenda deluser -p password
+	
+	各个参数分别对应:
+	-p 用户密码`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("deluser called")
 	},
@@ -38,6 +37,8 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(deluserCmd)
 
+
+	deluserCmd.Flags().StringP("user", "u", "", "your username")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
