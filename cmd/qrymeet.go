@@ -23,21 +23,29 @@ import (
 // qrymeetCmd represents the qrymeet command
 var qrymeetCmd = &cobra.Command{
 	Use:   "qrymeet",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "查询会议",
+	Long: `
+GoAgenda qrymeet -s starttime -e endtime
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	各个参数分别对应:
+	-s 会议起始时间
+	-e 会议结束时间`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("qrymeet called")
+		//获取参数
+		starttime, _ := cmd.Flags().GetString("start")
+		endtime, _ := cmd.Flags().GetString("end")
+		//处理参数
+		fmt.Println("qrymeet called by： ")
+		fmt.Println("starttime： " + starttime)
+		fmt.Println("endtime： " + endtime)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(qrymeetCmd)
 
+	qrymeetCmd.Flags().StringP("start", "s", "", "会议起始时间")
+	qrymeetCmd.Flags().StringP("end", "e", "", "会议结束时间")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

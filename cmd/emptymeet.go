@@ -23,21 +23,27 @@ import (
 // emptymeetCmd represents the emptymeet command
 var emptymeetCmd = &cobra.Command{
 	Use:   "emptymeet",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "清空会议",
+	Long: `
+GoAgenda emptymeet -p password
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	各个参数分别对应:
+	-p 用户密码`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("emptymeet called")
+		// 获取参数值
+		password, _ := cmd.Flags().GetString("password")
+		// 处理参数
+		fmt.Println("emptymeet called by :")
+		fmt.Println("password: " + password)
+		
+
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(emptymeetCmd)
 
+	emptymeetCmd.Flags().StringP("password", "p", "", "your password")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

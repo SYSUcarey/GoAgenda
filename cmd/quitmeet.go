@@ -23,20 +23,29 @@ import (
 // quitmeetCmd represents the quitmeet command
 var quitmeetCmd = &cobra.Command{
 	Use:   "quitmeet",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "退出会议",
+	Long: `
+GoAgenda quitmeet -t title -p password
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	各个参数分别对应:
+	-t 会议标题
+	-p 用户密码`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("quitmeet called")
+		//获取参数
+		title, _ := cmd.Flags().GetString("title")
+		password, _ := cmd.Flags().GetString("password")
+		//处理参数
+		fmt.Println("quitmeet called by： ")
+		fmt.Println("title： " + title)
+		fmt.Println("password： " + password)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(quitmeetCmd)
+
+	quitmeetCmd.Flags().StringP("title", "t", "", "会议标题")
+	quitmeetCmd.Flags().StringP("password", "p", "", "用户密码")
 
 	// Here you will define your flags and configuration settings.
 

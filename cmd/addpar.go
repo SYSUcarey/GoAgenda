@@ -23,21 +23,29 @@ import (
 // addparCmd represents the addpar command
 var addparCmd = &cobra.Command{
 	Use:   "addpar",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "增加会议参与者",
+	Long: `
+GoAgenda addpar -t title -p participator
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("addpar called")
+	各个参数分别对应:
+	-t 会议标题
+	-p 会议参与者`,
+	Run: func(cmd *cobra.Command, args []string) {		
+		//获取参数
+		title, _ := cmd.Flags().GetString("title")
+		participator, _ := cmd.Flags().GetString("parti")
+		//处理参数
+		fmt.Println("addpar called by： ")
+		fmt.Println("title： " + title)
+		fmt.Println("participator： " + participator)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(addparCmd)
 
+	addparCmd.Flags().StringP("title", "t", "", "会议标题")
+	addparCmd.Flags().StringP("parti", "p", "", "会议参与者")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
