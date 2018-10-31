@@ -30,7 +30,11 @@ GoAgenda deluser -p password
 	各个参数分别对应:
 	-p 用户密码`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("deluser called")
+		// 获取参数值
+		password, _ := cmd.Flags().GetString("pass")
+		// 处理参数
+		fmt.Println("login called by ")
+		fmt.Println("password: " + password)
 	},
 }
 
@@ -38,7 +42,7 @@ func init() {
 	rootCmd.AddCommand(deluserCmd)
 
 
-	deluserCmd.Flags().StringP("user", "u", "", "your username")
+	deluserCmd.Flags().StringP("pass", "p", "", "your password")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
