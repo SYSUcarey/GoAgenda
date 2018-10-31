@@ -20,11 +20,30 @@ GoAgenda register -u username -p password -e email -t telephone
 		email, _ := cmd.Flags().GetString("email")
 		telephone, _ := cmd.Flags().GetString("tel")
 		// 处理参数
-		fmt.Println("register called by ")
-		fmt.Println("username: " + username)
-		fmt.Println("password: " + password)
-		fmt.Println("email: " + email)
-		fmt.Println("telephone: " + telephone)
+		if username == "" {
+			fmt.Println("username cannot be null")
+			return
+		} else {			
+			fmt.Println("username: " + username)
+		}
+		if password == "" {
+			fmt.Println("password cannot be null")
+			return
+		} else {
+			fmt.Println("password: " + password)
+		}
+		if email == "" {
+			fmt.Println("email cannot be null")
+			return
+		} else {
+			fmt.Println("email: " + email)
+		}
+		if telephone == "" {
+			fmt.Println("telephone cannot be null")
+			return
+		} else {
+			fmt.Println("telephone: " + telephone)
+		}					
 	},
 }
 
