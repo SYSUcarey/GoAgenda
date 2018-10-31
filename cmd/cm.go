@@ -23,20 +23,37 @@ import (
 // cmCmd represents the cm command
 var cmCmd = &cobra.Command{
 	Use:   "cm",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "创建会议",
+	Long: `
+GoAgenda cm -t title -p participator -s starttime -e endtime
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	各个参数分别对应:
+	-t 会议标题
+	-p 会议参与者
+	-s 会议起始时间
+	-e 会议结束时间`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("cm called")
+		//获取参数
+		title, _ := cmd.Flags().GetString("title")
+		participator, _ := cmd.Flags().GetString("parti")
+		starttime, _ := cmd.Flags().GetString("start")
+		endtime, _ := cmd.Flags().GetString("end")
+		//处理参数
+		fmt.Println("cm called by： ")
+		fmt.Println("title： " + title)
+		fmt.Println("participator： " + participator)
+		fmt.Println("starttime： " + starttime)
+		fmt.Println("endtime： " + endtime)
+
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(cmCmd)
+	cmCmd.Flags().StringP("title", "t", "", "会议标题")
+	cmCmd.Flags().StringP("parti", "p", "", "会议参与者")
+	cmCmd.Flags().StringP("start", "s", "", "会议起始时间")
+	cmCmd.Flags().StringP("end", "e", "", "会议结束时间")
 
 	// Here you will define your flags and configuration settings.
 
