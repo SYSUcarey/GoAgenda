@@ -14,7 +14,11 @@ var registerCmd = &cobra.Command{
 GoAgenda register -u username -p password -e email -t telephone 
 各个参数分别对应用户名、密码、邮箱地址、电话号码`,
 	Run: func(cmd *cobra.Command, args []string) {
+<<<<<<< HEAD
 		cmd.Help()
+=======
+		//cmd.Help()
+>>>>>>> first_pr
 		username, _ := cmd.Flags().GetString("user")
 		fmt.Println("register called by " + username)
 	},
