@@ -71,6 +71,8 @@ GoAgenda canlmeet -t title -p password
 			fmt.Println("GoAgenda canlmeet failed: Invalid password!")
 			return
 		}
+
+		fmt.Println("GoAgenda canlmeet succeed!")
 	},
 }
 
