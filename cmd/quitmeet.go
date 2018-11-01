@@ -53,8 +53,8 @@ GoAgenda quitmeet -t title -p password
 
 				
 		// 2.会议是否存在
-		meetingList := service.MeetingModel
-		exist := (&meetingList).IsExist(title)
+		meetingList := &service.MeetingModel
+		exist := meetingList.IsExist(title)
 		if !exist {
 			fmt.Println("GoAgenda quitmeet failed: Meeting does not exist!")
 			return
@@ -73,6 +73,7 @@ GoAgenda quitmeet -t title -p password
 			return
 		}
 
+		meetingList.QuitMeeting(curStatus.UserName, title)
 		fmt.Println("GoAgenda quitmeet succeed!")
 	},
 }

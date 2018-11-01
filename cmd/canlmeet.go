@@ -50,16 +50,16 @@ GoAgenda canlmeet -t title -p password
 			return
 		}
 				
-		meetingList := service.MeetingModel
+		meetingList := &service.MeetingModel
 		// 2.会议是否存在
-		exist := (&meetingList).IsExist(title)
+		exist := meetingList.IsExist(title)
 		if !exist {
 			fmt.Println("GoAgenda canlmeet failed: Meeting does not exist!")
 			return
 		}
 		
 		// 3.是否有权删除（是否为发起者）
-		meeting := (&meetingList).GetMeeting(title)
+		meeting := meetingList.GetMeeting(title)
 		user := curStatus.UserName
 		if user != meeting.GetSponsor() {
 			fmt.Println("GoAgenda canlmeet failed: You are not the sponsor!")
@@ -72,6 +72,7 @@ GoAgenda canlmeet -t title -p password
 			return
 		}
 
+		meetingList.CancelMeeting(title)
 		fmt.Println("GoAgenda canlmeet succeed!")
 	},
 }
