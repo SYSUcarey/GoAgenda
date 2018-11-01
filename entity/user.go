@@ -19,11 +19,11 @@ type UserModel struct{
 	Users []UserData `json:"users"`
 }
 
-var userModel UserModel
+var User_Model UserModel
 const fileName string = "./data/users.json"
 
 //通过名字获得用户
-func (u *UserModel)getUserByName(username string) UserData{
+func (u *UserModel)GetUserByName(username string) UserData{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return user
@@ -33,12 +33,12 @@ func (u *UserModel)getUserByName(username string) UserData{
 }
 
 //获取所有用户
-func (u *UserModel)getAllUsers() []UserData{
+func (u *UserModel)GetAllUsers() []UserData{
 	return u.Users
 }
 
 //用户是否存在
-func (u *UserModel)isExist(username string) bool{
+func (u *UserModel)IsExist(username string) bool{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return true
@@ -48,7 +48,7 @@ func (u *UserModel)isExist(username string) bool{
 }
 
 //密码是否正确
-func (u *UserModel)matchPass(username, password string) bool{
+func (u *UserModel)MatchPass(username, password string) bool{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return user.Password == password
@@ -58,13 +58,13 @@ func (u *UserModel)matchPass(username, password string) bool{
 }
 
 //添加一个用户
-func (u *UserModel)addUser(userinfo UserData) {
+func (u *UserModel)AddUser(userinfo UserData) {
 	u.Users = append(u.Users, userinfo)
 	u.saveToFile()
 }
 
 //删除一个用户
-func (u *UserModel)deleteUser(username string) bool{
+func (u *UserModel)DeleteUser(username string) bool{
 	for i, user := range u.Users {
 		if user.Name == username {
 			u.Users = append(u.Users[:i], u.Users[i+1:]...)
@@ -76,7 +76,7 @@ func (u *UserModel)deleteUser(username string) bool{
 }
 
 func init() {
-	userModel.readFromFile()
+	User_Model.readFromFile()
 }
 
 func (u *UserModel)saveToFile() {

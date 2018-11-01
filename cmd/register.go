@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -19,31 +19,66 @@ GoAgenda register -u username -p password -e email -t telephone
 		password, _ := cmd.Flags().GetString("pass")
 		email, _ := cmd.Flags().GetString("email")
 		telephone, _ := cmd.Flags().GetString("tel")
-		// 处理参数
+		/*
+		 * 参数格式、逻辑处理
+		 * 1. 登陆与否判断
+		 * 2. 参数格式合法性判断
+		 * 3. 参数逻辑合法性判断
+		 */
+		// 1.登陆与否判断
+		has_login := false
+		// 读取status.json判断是否已经登陆
+		// todo
+		// 已经登陆无法进行注册命令
+		if has_login {
+			fmt.Println("GoAgenda register failed: You had already logined!")
+			return
+		}
+		// 2. 参数格式合法性判断
 		if username == "" {
-			fmt.Println("username cannot be null")
+			fmt.Println("GoAgenda register failed: username cannot be null")
 			return
 		} else {			
 			fmt.Println("username: " + username)
 		}
 		if password == "" {
-			fmt.Println("password cannot be null")
+			fmt.Println("GoAgenda register failed: password cannot be null")
 			return
 		} else {
 			fmt.Println("password: " + password)
 		}
 		if email == "" {
-			fmt.Println("email cannot be null")
+			fmt.Println("GoAgenda register failed: email cannot be null")
 			return
 		} else {
 			fmt.Println("email: " + email)
 		}
 		if telephone == "" {
-			fmt.Println("telephone cannot be null")
+			fmt.Println("GoAgenda register failed: telephone cannot be null")
 			return
 		} else {
 			fmt.Println("telephone: " + telephone)
-		}					
+		}	
+		// 3. 参数逻辑合法性判断
+		// 注册用户名不允许重复
+		if entity.User_Model.IsExist(username) {
+			fmt.Println("GoAgenda register failed: username had been existed!")
+			return
+		}
+		
+
+		/*
+		 * 参数格式、逻辑合法后的响应处理
+		 * 1. users.json添加一个用户
+		 * 
+		 */		
+		userinfo := entity.UserData{
+			Name : username,
+			Password : password,
+			Email : email,
+			Tel : telephone,
+		}
+		entity.User_Model.AddUser(userinfo)
 	},
 }
 
