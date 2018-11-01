@@ -41,7 +41,7 @@ GoAgenda addpar -t title -p participator
 			fmt.Println("GoAgenda addpar failed: title cannot be null")
 			return
 		}
-
+		// 添加的参与者不能为空
 		if participator == "" {
 			fmt.Println("GoAgenda addpar failed: participator cannot be null")
 			return
@@ -49,9 +49,13 @@ GoAgenda addpar -t title -p participator
 		// 3.参数逻辑合法性判断
 		// 必须存在有这个标题的会议 
 		// todo
+		// 当前用户必须是该会议的发起者
+		// todo
 		// 必须存在参与者这一个用户
 		// todo
 		// 会议中原本没有这个参与者
+		// todo
+		// 参与者必须有时间参加会议
 		// todo
 
 		/*
