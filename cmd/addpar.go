@@ -47,7 +47,7 @@ GoAgenda addpar -t title -p participator
 			fmt.Println("GoAgenda addpar failed: participator cannot be null")
 			return
 		}
-		// 3.参数逻辑合法性判断
+		// 参数逻辑合法性判断
 		if !service.MeetingModel.IsExist(title) {
 			fmt.Println("GoAgenda addpar failed: this string is not one of meeting's title")
 			return

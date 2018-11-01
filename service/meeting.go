@@ -48,9 +48,10 @@ func (m *MeetingList) GetMeeting(title string) *entity.MeetingData {
 }
 
 /**
+
  * create a meeting
  * @param userName the sponsor's userName
- * @param title the meeting's title
+ * @param title  the meeting's title
  * @param participator the meeting's participator
  * @param startData the meeting's start date
  * @param endData the meeting's end date

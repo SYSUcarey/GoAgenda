@@ -23,10 +23,10 @@ GoAgenda delpar -t title -p participator
 		//获取参数
 		title, _ := cmd.Flags().GetString("title")
 		participator, _ := cmd.Flags().GetString("parti")
+
 		//处理参数
 
-		// 参数逻辑合法性判断
-
+		//参数格式处理
 		if title == "" {
 			fmt.Println("GoAgenda delpar failed: title cannot be null")
 			return
@@ -36,7 +36,7 @@ GoAgenda delpar -t title -p participator
 			fmt.Println("GoAgenda delpar failed: participator cannot be null")
 			return
 		}
-
+		// 参数逻辑合法性判断
 		if !(service.MeetingModel.GetMeeting(title).GetSponsor() == entity.CurStatus.UserName) {
 			fmt.Println("GoAgenda delpar failed: you must be the sponsor of the meeting")
 			return
