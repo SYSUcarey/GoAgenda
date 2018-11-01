@@ -77,17 +77,42 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 			return
 		}
 		// 3.参数逻辑性判断
+		// 参与者必须是一个用户
+		is_participator_a_user := true
+		// 读取users.json判断是否存在这样一个用户
+		// todo
+		if !is_participator_a_user {
+			fmt.Println("GoAgend cm failed: participator is not a user!")
+			return
+		}
 		// 结束时间一定要在开始时间之后
 		is_endtime_after_starttime := end.After(start)
 		if !is_endtime_after_starttime {
 			fmt.Println("GoAgenda cm failed: endtime must be after starttime!")
 			return
 		}
+		// 开始时间一定要在当前时间之后
+		currenttime := time.Now()
+		is_starttime_after_currenttime := start.After(currenttime)
+		if !is_starttime_after_currenttime {
+			fmt.Println("GoAgenda cm failed: starttime must be after current time!")
+			return
+		}
+
+
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
+		 * 1. meetings.json添加一个会议
+		 * 
 		 */
 		// todo
+		fmt.Println("GoAgenda cm succeed: ")
+		fmt.Println("title: " + title)
+		fmt.Println("participator: " + participator)
+		fmt.Println("starttime: " + starttime)
+		fmt.Println("endtime: " + endtime)
+
 
 	},
 }
