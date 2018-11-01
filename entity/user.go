@@ -20,7 +20,7 @@ type UserList struct{
 }
 
 var UserModel UserList
-var fileName string = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/users.json"
+var userfile string = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/users.json"
 
 //通过名字获得用户
 func (u *UserList)GetUserByName(username string) UserData{
@@ -85,7 +85,7 @@ func (u *UserList)saveToFile() {
 	if (err != nil) {
 		log.Fatal(err)
 	}
-	fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
+	fp, err := os.OpenFile(userfile, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -99,11 +99,11 @@ func (u *UserList)saveToFile() {
 
 func (u *UserList)readFromFile() {
 	//判断文件是否存在
-	_, err := os.Stat(fileName)
+	_, err := os.Stat(userfile)
 	if os.IsNotExist(err) {
 		return 
 	}
-	fp, err := os.OpenFile(fileName, os.O_RDONLY, 0755)
+	fp, err := os.OpenFile(userfile, os.O_RDONLY, 0755)
 	defer fp.Close()
 	if err != nil {
 		log.Fatal(err)
