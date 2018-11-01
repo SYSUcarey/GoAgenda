@@ -37,8 +37,18 @@ GoAgenda login -u username -p password
 		username, _ := cmd.Flags().GetString("user")
 		password, _ := cmd.Flags().GetString("pass")
 		// 处理参数
-		fmt.Println("login called by ")
+		// 用户名为空
+		if	username == "" {
+			fmt.Println("username cannot be null")
+			return
+		}
 		fmt.Println("username: " + username)
+
+		// 密码为空
+		if	password == "" {
+			fmt.Println("password cannot be null")
+			return
+		}
 		fmt.Println("password: " + password)
 	},
 }

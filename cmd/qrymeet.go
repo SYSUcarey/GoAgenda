@@ -34,10 +34,18 @@ GoAgenda qrymeet -s starttime -e endtime
 		//获取参数
 		starttime, _ := cmd.Flags().GetString("start")
 		endtime, _ := cmd.Flags().GetString("end")
-		//处理参数
-		fmt.Println("qrymeet called by： ")
-		fmt.Println("starttime： " + starttime)
-		fmt.Println("endtime： " + endtime)
+		//处理参数		
+		if starttime == "" {
+			fmt.Println("starttime cannot be null")
+			return
+		}
+		fmt.Println("starttime: " + starttime)
+
+		if endtime == "" {
+			fmt.Println("endtime cannot be null")
+			return
+		}
+		fmt.Println("endtime: " + endtime)
 	},
 }
 

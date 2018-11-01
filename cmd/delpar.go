@@ -36,9 +36,17 @@ GoAgenda delpar -t title -p participator
 		title, _ := cmd.Flags().GetString("title")
 		participator, _ := cmd.Flags().GetString("parti")
 		//处理参数
-		fmt.Println("delpar called by： ")
-		fmt.Println("title： " + title)
-		fmt.Println("participator： " + participator)
+		if title == "" {
+			fmt.Println("title cannot be null")
+			return
+		}
+		fmt.Println("title: " + title)
+
+		if participator == "" {
+			fmt.Println("participator cannot be null")
+			return
+		}
+		fmt.Println("participator: " + participator)
 	},
 }
 

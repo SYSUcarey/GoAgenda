@@ -33,7 +33,10 @@ GoAgenda deluser -p password
 		// 获取参数值
 		password, _ := cmd.Flags().GetString("pass")
 		// 处理参数
-		fmt.Println("login called by ")
+		if password == "" {
+			fmt.Println("password cannot be null")
+			return
+		}
 		fmt.Println("password: " + password)
 	},
 }

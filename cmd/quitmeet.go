@@ -34,10 +34,18 @@ GoAgenda quitmeet -t title -p password
 		//获取参数
 		title, _ := cmd.Flags().GetString("title")
 		password, _ := cmd.Flags().GetString("password")
-		//处理参数
-		fmt.Println("quitmeet called by： ")
-		fmt.Println("title： " + title)
-		fmt.Println("password： " + password)
+		//处理参数		
+		if title == "" {
+			fmt.Println("title cannot be null")
+			return
+		}
+		fmt.Println("title: " + title)
+
+		if password == "" {
+			fmt.Println("password cannot be null")
+			return
+		}
+		fmt.Println("password: " + password)
 	},
 }
 

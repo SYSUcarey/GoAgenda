@@ -33,10 +33,11 @@ GoAgenda emptymeet -p password
 		// 获取参数值
 		password, _ := cmd.Flags().GetString("password")
 		// 处理参数
-		fmt.Println("emptymeet called by :")
-		fmt.Println("password: " + password)
-		
-
+		if password == "" {
+			fmt.Println("password cannot be null")
+			return
+		}
+		fmt.Println("password: " + password)		
 	},
 }
 

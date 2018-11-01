@@ -38,12 +38,30 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		participator, _ := cmd.Flags().GetString("parti")
 		starttime, _ := cmd.Flags().GetString("start")
 		endtime, _ := cmd.Flags().GetString("end")
-		//处理参数
-		fmt.Println("cm called by： ")
-		fmt.Println("title： " + title)
-		fmt.Println("participator： " + participator)
-		fmt.Println("starttime： " + starttime)
-		fmt.Println("endtime： " + endtime)
+		//处理参数		
+		if title == "" {
+			fmt.Println("title cannot be null")
+			return
+		}
+		fmt.Println("title: " + title)
+
+		if participator == "" {
+			fmt.Println("participator cannot be null")
+			return
+		}
+		fmt.Println("participator: " + participator)
+
+		if starttime == "" {
+			fmt.Println("starttime cannot be null")
+			return
+		}
+		fmt.Println("starttime: " + starttime)
+
+		if endtime == "" {
+			fmt.Println("endtime cannot be null")
+			return
+		}
+		fmt.Println("endtime: " + endtime)
 
 	},
 }

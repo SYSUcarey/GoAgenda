@@ -35,9 +35,17 @@ GoAgenda canlmeet -t title -p password
 		title, _ := cmd.Flags().GetString("title")
 		password, _ := cmd.Flags().GetString("password")
 		//处理参数
-		fmt.Println("canlmeet called by： ")
-		fmt.Println("title： " + title)
-		fmt.Println("password： " + password)
+		if title == "" {
+			fmt.Println("title cannot be null" + title)
+			return
+		}		
+		fmt.Println("title: " + title)
+
+		if password == "" {
+			fmt.Println("password cannot be null" + title)
+			return
+		}	
+		fmt.Println("password: " + password)
 	},
 }
 
