@@ -38,40 +38,37 @@ GoAgenda register -u username -p password -e email -t telephone
 		if username == "" {
 			fmt.Println("GoAgenda register failed: username cannot be null")
 			return
-		} else {			
-			fmt.Println("username: " + username)
 		}
 		if password == "" {
 			fmt.Println("GoAgenda register failed: password cannot be null")
 			return
-		} else {
-			fmt.Println("password: " + password)
 		}
 		if email == "" {
 			fmt.Println("GoAgenda register failed: email cannot be null")
 			return
-		} else {
-			fmt.Println("email: " + email)
 		}
 		if telephone == "" {
 			fmt.Println("GoAgenda register failed: telephone cannot be null")
 			return
-		} else {
-			fmt.Println("telephone: " + telephone)
-		}	
+		}
 		// 3. 参数逻辑合法性判断
 		// 注册用户名不允许重复
 		if entity.UserModel.IsExist(username) {
 			fmt.Println("GoAgenda register failed: username had been existed!")
 			return
 		}
-		
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
 		 * 1. users.json添加一个用户
 		 * 
 		 */		
+		fmt.Println("GoAgenda register succeed: ")
+		fmt.Println("username: " + username)
+		fmt.Println("password: " + password)
+		fmt.Println("email: " + email)
+		fmt.Println("telephone: " + telephone)
+
 		userinfo := entity.UserData{
 			Name : username,
 			Password : password,
