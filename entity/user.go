@@ -20,7 +20,7 @@ type UserList struct{
 }
 
 var UserModel UserList
-const fileName string = "../data/users.json"
+var fileName string = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/users.json"
 
 //通过名字获得用户
 func (u *UserList)GetUserByName(username string) UserData{
