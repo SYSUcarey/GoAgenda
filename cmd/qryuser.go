@@ -30,8 +30,9 @@ GoAgenda qryuser
 		fmt.Println("GoAgenda qryuser succeed: ")
 		user_list := entity.UserModel.GetAllUsers()
 		fmt.Println("There are ", len(user_list), " users!")
+		fmt.Println("Name-Email-Telephone")
 		for _, user := range user_list {
-			fmt.Println(user.Name)
+			fmt.Println(user.Name, " ", user.Email, " ", user.Tel)
 		}
 
 	},
