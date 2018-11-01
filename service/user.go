@@ -97,6 +97,7 @@ func (u *UserList)readFromFile() {
 	//判断文件是否存在
 	_, err := os.Stat(userfile)
 	if os.IsNotExist(err) {
+		os.Mkdir(os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data", 0777)
 		return 
 	}
 	fp, err := os.OpenFile(userfile, os.O_RDONLY, 0755)
