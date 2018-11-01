@@ -13,7 +13,7 @@ type MeetingList struct{
 }
 
 var MeetingModel MeetingList
-var meetingfile = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/users.json"
+var meetingfile = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/meetings.json"
 
 func init() {
 	MeetingModel.readFromFile()
