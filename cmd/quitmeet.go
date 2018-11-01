@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -32,6 +32,36 @@ GoAgenda quitmeet -t title -p password
 			return
 		}
 		fmt.Println("password: " + password)
+
+		/*
+		 * 合法性判断
+		 * 1.是否登录
+		 * 2.会议是否存在
+		 * 3.是否为会议的发起者
+		 * 4.是否为会议的参与者
+		 * 5.密码是否正确 
+		 */
+
+		curStatus := entity.CurStatus.GetStatus()		
+
+		 // 1.是否登录
+		has_login := curStatus.Islogin
+		if !has_login {
+			fmt.Println("GoAgenda cm failed: You did not login yet!")
+			return
+		}
+
+		// 2.会议是否存在
+
+		// 3.是否为发起者
+
+		// 4.是否为参与者
+
+		// 5.密码是否正确
+		if password != curStatus.Password {
+			fmt.Println("GoAgenda cm failed: Invalid password!")
+			return
+		}
 	},
 }
 
