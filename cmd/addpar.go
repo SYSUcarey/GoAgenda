@@ -30,13 +30,14 @@ GoAgenda addpar -t title -p participator
 		// 1.登陆与否判断
 		has_login := true
 		// 读取status.json判断是否已经登陆
-		// todo
+
 		// 未登陆的响应处理
 		if !has_login {
 			fmt.Println("GoAgenda addpar failed: You did not login yet!")
 			return
 		}
 		// 2. 参数格式合法性判断
+
 		// 标题不能为空
 		if title == "" {
 			fmt.Println("GoAgenda addpar failed: title cannot be null")
@@ -70,7 +71,7 @@ GoAgenda addpar -t title -p participator
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
-		 * 1. meetings.json对应会议中添加一个participator
+		 *  meetings.json对应会议中添加一个participator
 		 *
 		 */
 		service.MeetingModel.AddMeetingParticipator(entity.CurStatus.UserName, title, participator)
