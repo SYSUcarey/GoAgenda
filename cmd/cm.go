@@ -98,8 +98,8 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 			fmt.Println("GoAgenda cm failed: starttime must be after current time!")
 			return
 		}
-
-
+		// 会议标题不能重复
+		// todo
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
