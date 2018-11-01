@@ -72,6 +72,8 @@ GoAgenda quitmeet -t title -p password
 			fmt.Println("GoAgenda quitmeet failed: Invalid password!")
 			return
 		}
+
+		fmt.Println("GoAgenda quitmeet succeed!")
 	},
 }
 

@@ -98,8 +98,13 @@ func (m *MeetingList)RemoveMeetingParticipator(username, title, participator str
    * @param title the meeting's title
    * @return if success, true will be returned
    */
-func (m *MeetingList)QuitMeeting(username, title string) bool{
-	return true
+func (m *MeetingList)QuitMeeting(username, title string){
+	for i, meeting := range m.Meetings {
+		if meeting.Title == title && meeting.IsParticipator(username) {
+			m.Meetings[i].RemoveParticipator(username)
+			m.saveToFile()
+		}
+	}
 }
 
 
@@ -116,12 +121,16 @@ func (m *MeetingList)MeetingQuery(username, start, end string){
 
 /**
    * cancel a meeting by title and its sponsor
-   * @param userName sponsor's username
    * @param title meeting's title
    * @return if success, true will be returned
    */
-func (m *MeetingList)CancelMeeting(username, title string) bool{
-	return true
+func (m *MeetingList)CancelMeeting(title string){
+	for i, meeting := range m.Meetings {
+		if meeting.Title == title {
+			m.Meetings = append(m.Meetings[:i], m.Meetings[i+1:]...)
+			m.saveToFile()
+		}
+	}
 }
 
 /**
