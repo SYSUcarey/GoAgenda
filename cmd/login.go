@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -52,19 +52,26 @@ GoAgenda login -u username -p password
 
 		// 3. 参数逻辑合法性判断
 		// 登陆用户名必须存在
-		// todo
+		if !entity.UserModel.IsExist(username) {
+			fmt.Println("GoAgenda login failed: username does not exist!")
+			return
+		}
 		// 用户名和密码必须匹配
-		// todo
+		if !entity.UserModel.MatchPass(username, password) {
+			fmt.Println("GoAgenda login failed: username does not match password!")
+			return
+		}
 		
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
 		 * 1. status.json添加一个用户
-		 * 
+		 * todo
 		 */	
 		fmt.Println("GoAgenda login succeed: ")
 		fmt.Println("username: " + username)
 		fmt.Println("password: " + password)
+
 	},
 }
 
