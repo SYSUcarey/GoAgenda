@@ -13,7 +13,7 @@ type MeetingList struct{
 }
 
 var MeetingModel MeetingList
-var meetingfile = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/users.json"
+var meetingfile = os.Getenv("GOPATH") + "/src/github.com/chenf99/GoAgenda/data/meetings.json"
 
 func init() {
 	MeetingModel.readFromFile()
@@ -57,7 +57,15 @@ func (m *MeetingList)GetMeeting(title string) *entity.MeetingData{
    * @return if success, true will be returned
    */
 func (m *MeetingList)CreateMeeting(username, title, start, end string, participator []string) bool{
-
+	meeting := entity.MeetingData{
+		Title : title,
+		Sponsor : username,
+		Participator : participator,
+		Start : start,
+		End : end,
+	}
+	m.Meetings = append(m.Meetings, meeting)
+	m.saveToFile()
 	return true
 }
 
