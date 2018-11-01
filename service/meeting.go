@@ -38,13 +38,13 @@ func (m *MeetingList)IsExist(title string) bool{
 	* @param title the meeting's title
 	* @return if success, a meeting will be returned
 	*/
-func (m *MeetingList)GetMeeting(title string) entity.MeetingData{
+func (m *MeetingList)GetMeeting(title string) *entity.MeetingData{
 	for _, meeting := range m.Meetings {
 		if meeting.Title == title {
-			return meeting
+			return &meeting
 		}
 	}
-	return entity.MeetingData{}
+	return &entity.MeetingData{}
 }
 
 /**
