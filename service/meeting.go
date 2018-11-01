@@ -20,6 +20,34 @@ func init() {
 }
 
 /**
+	* whether meeting exist
+	* @param title the title of meeting
+	* @return if success, true will be returned
+	*/
+func (m *MeetingList)IsExist(title string) bool{
+	for _, meeting := range m.Meetings {
+		if meeting.Title == title {
+			return true
+		}
+	}
+	return false
+}
+
+/** 
+	* get a meeting
+	* @param title the meeting's title
+	* @return if success, a meeting will be returned
+	*/
+func (m *MeetingList)GetMeeting(title string) *entity.MeetingData{
+	for _, meeting := range m.Meetings {
+		if meeting.Title == title {
+			return &meeting
+		}
+	}
+	return &entity.MeetingData{}
+}
+
+/**
    * create a meeting
    * @param userName the sponsor's userName
    * @param title the meeting's title
@@ -29,6 +57,7 @@ func init() {
    * @return if success, true will be returned
    */
 func (m *MeetingList)CreateMeeting(username, title, start, end string, participator []string) bool{
+
 	return true
 }
 
@@ -68,7 +97,7 @@ func (m *MeetingList)QuitMeeting(username, title string) bool{
 
 /**
    * search a meeting by username, time interval
-   * @param uesrName the sponsor's userName
+   * @param uesrName the sponsor's userName or as participator
    * @param startDate time interval's start date
    * @param endDate time interval's end date
    * @return a meeting list result
