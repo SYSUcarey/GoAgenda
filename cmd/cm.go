@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"time"
+	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -32,9 +34,7 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		 * 3. 参数逻辑合法性判断
 		 */
 		// 1.登陆与否判断
-		has_login := true
-		// 读取status.json判断是否已经登陆
-		// todo
+		has_login := entity.CurStatus.GetStatus().Islogin
 		// 未登陆的响应处理
 		if !has_login {
 			fmt.Println("GoAgenda cm failed: You did not login yet!")
@@ -78,12 +78,12 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		}
 		// 3.参数逻辑性判断
 		// 会议标题不能重复
-		// todo
+		if service.MeetingModel.IsExist(title) {
+			fmt.Println("GoAgenda cm failed: title repeated!")
+			return
+		}
 		// 参与者必须是一个用户
-		is_participator_a_user := true
-		// 读取users.json判断是否存在这样一个用户
-		// todo
-		if !is_participator_a_user {
+		if !service.UserModel.IsExist(participator) {
 			fmt.Println("GoAgend cm failed: participator is not a user!")
 			return
 		}
@@ -111,14 +111,19 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		/*
 		 * 参数格式、逻辑合法后的响应处理
 		 * 1. meetings.json添加一个会议
-		 * 
+		 * 2. UI提示处理
 		 */
-		// todo
-		fmt.Println("GoAgenda cm succeed: ")
-		fmt.Println("title: " + title)
-		fmt.Println("participator: " + participator)
-		fmt.Println("starttime: " + starttime)
-		fmt.Println("endtime: " + endtime)
+		var participators = []string{}
+		participators = append(participators, participator)
+		if service.MeetingModel.CreateMeeting(entity.CurStatus.GetStatus().UserName, title, starttime, endtime, participators) {
+			fmt.Println("GoAgenda cm succeed: ")
+			fmt.Println("title: " + title)
+			fmt.Println("participator: " + participator)
+			fmt.Println("starttime: " + starttime)
+			fmt.Println("endtime: " + endtime)
+		} else {
+			fmt.Println("GoAgenda cm failed: CreateMeeting failed!")
+		}
 
 
 	},
