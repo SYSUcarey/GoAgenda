@@ -46,7 +46,7 @@ GoAgenda canlmeet -t title -p password
 		// 1.是否登录		
 		has_login := curStatus.Islogin
 		if !has_login {
-			fmt.Println("GoAgenda cm failed: You did not login yet!")
+			fmt.Println("GoAgenda canlmeet failed: You did not login yet!")
 			return
 		}
 				
@@ -54,21 +54,21 @@ GoAgenda canlmeet -t title -p password
 		// 2.会议是否存在
 		exist := (&meetingList).IsExist(title)
 		if !exist {
-			fmt.Println("GoAgenda cm failed: Meeting does not exist!")
+			fmt.Println("GoAgenda canlmeet failed: Meeting does not exist!")
 			return
 		}
 		
-		// 3.是否有权删除（会议是否由当前用户创建）
+		// 3.是否有权删除（是否为发起者）
 		meeting := (&meetingList).GetMeeting(title)
 		user := curStatus.UserName
 		if user != meeting.GetSponsor() {
-			fmt.Println("GoAgenda cm failed: You are not the sponsor!")
+			fmt.Println("GoAgenda canlmeet failed: You are not the sponsor!")
 			return
 		}
 
 		// 4.密码是否正确
 		if password != curStatus.Password {
-			fmt.Println("GoAgenda cm failed: Invalid password!")
+			fmt.Println("GoAgenda canlmeet failed: Invalid password!")
 			return
 		}
 	},

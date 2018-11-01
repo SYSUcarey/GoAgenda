@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -36,10 +37,9 @@ GoAgenda quitmeet -t title -p password
 		/*
 		 * 合法性判断
 		 * 1.是否登录
-		 * 2.会议是否存在
-		 * 3.是否为会议的发起者
-		 * 4.是否为会议的参与者
-		 * 5.密码是否正确 
+		 * 2.会议是否存在		 
+		 * 3.是否为会议的参与者
+		 * 4.密码是否正确 
 		 */
 
 		curStatus := entity.CurStatus.GetStatus()		
@@ -47,19 +47,29 @@ GoAgenda quitmeet -t title -p password
 		 // 1.是否登录
 		has_login := curStatus.Islogin
 		if !has_login {
-			fmt.Println("GoAgenda cm failed: You did not login yet!")
+			fmt.Println("GoAgenda quitmeet failed: You did not login yet!")
 			return
 		}
 
+				
 		// 2.会议是否存在
+		meetingList := service.MeetingModel
+		exist := (&meetingList).IsExist(title)
+		if !exist {
+			fmt.Println("GoAgenda quitmeet failed: Meeting does not exist!")
+			return
+		}		
+		
+		// 3.是否为参与者		
+		meeting := meetingList.GetMeeting(title)
+		if !meeting.IsParticipator(curStatus.UserName) {
+			fmt.Println("GoAgenda quitmeet failed: You are not a participator!")
+			return
+		}
 
-		// 3.是否为发起者
-
-		// 4.是否为参与者
-
-		// 5.密码是否正确
+		// 4.密码是否正确
 		if password != curStatus.Password {
-			fmt.Println("GoAgenda cm failed: Invalid password!")
+			fmt.Println("GoAgenda quitmeet failed: Invalid password!")
 			return
 		}
 	},
