@@ -9,7 +9,7 @@ import (
 type status struct{
 	UserName string	`json:"username"`
 	Password string `json:"password"`
-	Islogin bool 			`json:"islogin"`
+	Islogin bool 	`json:"islogin"`
 }
 
 var CurStatus status
@@ -24,7 +24,7 @@ func (c *status)GetStatus() status{
 }
 
 func (c *status)LogIn(username, password string) {
-	CurStatus = status{
+	c = &status{
 		UserName : username,
 		Password : password,
 		Islogin  : true,
@@ -33,7 +33,7 @@ func (c *status)LogIn(username, password string) {
 }
 
 func (c *status)LogOut() {
-	CurStatus = status{
+	c = &status{
 		UserName : "",
 		Password : "",
 		Islogin  : false,
@@ -47,7 +47,7 @@ func (c *status)saveToFile() {
 	if (err != nil) {
 		log.Fatal(err)
 	}
-	fp, err := os.OpenFile(statusfile, os.O_RDWR|os.O_CREATE, 0755)
+	fp, err := os.OpenFile(statusfile, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}

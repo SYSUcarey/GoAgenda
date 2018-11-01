@@ -85,7 +85,7 @@ func (u *UserList)saveToFile() {
 	if (err != nil) {
 		log.Fatal(err)
 	}
-	fp, err := os.OpenFile(userfile, os.O_RDWR|os.O_CREATE, 0755)
+	fp, err := os.OpenFile(userfile, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
