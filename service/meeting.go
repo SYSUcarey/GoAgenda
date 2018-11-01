@@ -38,13 +38,13 @@ func (m *MeetingList)IsExist(title string) bool{
 	* @param title the meeting's title
 	* @return if success, a meeting will be returned
 	*/
-func (m *MeetingList)GetMeeting(title string) *entity.MeetingData{
+func (m *MeetingList)GetMeeting(title string) entity.MeetingData{
 	for _, meeting := range m.Meetings {
 		if meeting.Title == title {
-			return &meeting
+			return meeting
 		}
 	}
-	return &entity.MeetingData{}
+	return entity.MeetingData{}
 }
 
 /**
@@ -76,8 +76,13 @@ func (m *MeetingList)CreateMeeting(username, title, start, end string, participa
    * @param participator the meeting's participator
    * @return if success, true will be returned
    */
-func (m *MeetingList)AddMeetingParticipator(username, title, participator string) bool{
-	return true
+func (m *MeetingList)AddMeetingParticipator(username, title, participator string){
+	for i, meeting := range m.Meetings {
+		if meeting.Sponsor == username && meeting.Title == title && !meeting.IsParticipator(participator){
+			m.Meetings[i].AddParticipator(participator)
+			m.saveToFile()
+		}
+	}
 }
 
 
@@ -88,8 +93,13 @@ func (m *MeetingList)AddMeetingParticipator(username, title, participator string
    * @param participator the meeting's participator
    * @return if success, true will be returned
    */
-func (m *MeetingList)RemoveMeetingParticipator(username, title, participator string) bool{
-	return true
+func (m *MeetingList)RemoveMeetingParticipator(username, title, participator string) {
+	for i, meeting := range m.Meetings {
+		if meeting.Sponsor == username && meeting.Title == title && !meeting.IsParticipator(participator){
+			m.Meetings[i].RemoveParticipator(participator)
+			m.saveToFile()
+		}
+	}
 }
 
 /**
@@ -115,8 +125,16 @@ func (m *MeetingList)QuitMeeting(username, title string){
    * @param endDate time interval's end date
    * @return a meeting list result
    */
-func (m *MeetingList)MeetingQuery(username, start, end string){
-
+func (m *MeetingList)MeetingQuery(username, start, end string) []entity.MeetingData{
+	result := []entity.MeetingData{}
+	for _, meeting := range m.Meetings {
+		if meeting.Sponsor == username || meeting.IsParticipator(username) {
+			if meeting.Start > start && meeting.End < end {
+				result = append(result, meeting)
+			}
+		}
+	}
+	return result
 }
 
 /**
@@ -138,8 +156,13 @@ func (m *MeetingList)CancelMeeting(title string){
    * @param userName sponsor's username
    * @return if success, true will be returned
    */
-func (m *MeetingList)EmptyMeeting(userName string) bool{
-	return true
+func (m *MeetingList)EmptyMeeting(userName string){
+	for i, meeting := range m.Meetings {
+		if meeting.Sponsor == userName {
+			m.Meetings = append(m.Meetings[:i], m.Meetings[i+1:]...)
+			m.saveToFile()
+		}
+	}
 }
 func (m *MeetingList)saveToFile() {
 	//MeetingList转json格式数据
