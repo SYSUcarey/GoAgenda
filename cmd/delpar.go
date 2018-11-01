@@ -31,7 +31,6 @@ GoAgenda delpar -t title -p participator
 			fmt.Println("GoAgenda delpar failed: title cannot be null")
 			return
 		}
-		fmt.Println("title: " + title)
 
 		if participator == "" {
 			fmt.Println("GoAgenda delpar failed: participator cannot be null")
@@ -53,9 +52,11 @@ GoAgenda delpar -t title -p participator
 			return
 		} // 会议中有这个参与者
 
-		//service.MeetingModel.GetMeeting(title).RemoveParticipator(participator)
+		service.MeetingModel.RemoveMeetingParticipator(entity.CurStatus.UserName, title, participator)
 
-		fmt.Println("participator: " + participator)
+		fmt.Println("GoAgenda addpar succeed: ")
+		fmt.Println("title: ", title)
+		fmt.Println("participator: ", participator)
 	},
 }
 
