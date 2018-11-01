@@ -73,7 +73,7 @@ GoAgenda addpar -t title -p participator
 		 * 1. meetings.json对应会议中添加一个participator
 		 *
 		 */
-		service.MeetingModel.GetMeeting(title).AddParticipator(participator)
+		//service.MeetingModel.GetMeeting(title).AddParticipator(participator)
 
 		fmt.Println("GoAgenda addpar succeed: ")
 		fmt.Println("title: ", title)
