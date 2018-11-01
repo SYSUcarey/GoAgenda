@@ -9,7 +9,7 @@ import (
 // addparCmd represents the addpar command
 var addparCmd = &cobra.Command{
 	Use:   "addpar",
-	Short: "增加会议参与者",
+	Short: "增加会议参与者",x
 	Long: `
 GoAgenda addpar -t title -p participator
 

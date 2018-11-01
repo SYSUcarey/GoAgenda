@@ -16,8 +16,6 @@ GoAgenda qryuser
 	Run: func(cmd *cobra.Command, args []string) {
 		// 登陆与否判断
 		has_login := entity.CurStatus.GetStatus().Islogin
-		// 读取status.json判断是否已经登陆
-		// todo
 		// 已经登陆无法进行注册命令
 		if !has_login {
 			fmt.Println("GoAgenda qryuser failed: You did not login yet!")
@@ -27,7 +25,7 @@ GoAgenda qryuser
 		/*
 		 * 状态、参数格式、逻辑合法后的响应处理
 		 * 1. 读取users.json，获得用户列表
-		 * todo
+		 * 2. IO提示
 		 */	
 		fmt.Println("GoAgenda qryuser succeed: ")
 		user_list := entity.UserModel.GetAllUsers()

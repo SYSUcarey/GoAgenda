@@ -30,8 +30,6 @@ GoAgenda login -u username -p password
 		 */
 		// 1.登陆与否判断
 		has_login := entity.CurStatus.GetStatus().Islogin
-		// 读取status.json判断是否已经登陆
-		// todo
 		// 已经登陆无法进行注册命令
 		if has_login {
 			fmt.Println("GoAgenda login failed: You had already logined!")
@@ -65,7 +63,8 @@ GoAgenda login -u username -p password
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
-		 * 1. status.json添加一个用户
+		 * 1. status.json添加登陆状态
+		 * 2. IO提示
 		 */	
 		fmt.Println("GoAgenda login succeed: ")
 		fmt.Println("username: " + username)
