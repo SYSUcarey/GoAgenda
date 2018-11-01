@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -28,7 +29,7 @@ GoAgenda qryuser
 		 * 2. IO提示
 		 */	
 		fmt.Println("GoAgenda qryuser succeed: ")
-		user_list := entity.UserModel.GetAllUsers()
+		user_list := service.UserModel.GetAllUsers()
 		fmt.Println("There are ", len(user_list), " users!")
 		fmt.Println("Name-Email-Telephone")
 		for _, user := range user_list {

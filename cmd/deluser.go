@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
@@ -42,7 +43,7 @@ GoAgenda deluser -p password
 		// 3. 参数逻辑合法性判断
 		// 当前用户名与密码参数是否匹配
 		username := entity.CurStatus.GetStatus().UserName
-		if !entity.UserModel.MatchPass(username, password) {
+		if !service.UserModel.MatchPass(username, password) {
 			fmt.Println("GoAgenda deluser failed: username does not match password!")
 			return
 		}
@@ -55,7 +56,7 @@ GoAgenda deluser -p password
 		 * 3. IO处理
 		 */	
 		// 删除当前用户
-		entity.UserModel.DeleteUser(username)
+		service.UserModel.DeleteUser(username)
 		// 登出系统
 		entity.CurStatus.LogOut()
 		// IO提示处理

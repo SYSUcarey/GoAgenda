@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -51,7 +52,7 @@ GoAgenda register -u username -p password -e email -t telephone
 		}
 		// 3. 参数逻辑合法性判断
 		// 注册用户名不允许重复
-		if entity.UserModel.IsExist(username) {
+		if service.UserModel.IsExist(username) {
 			fmt.Println("GoAgenda register failed: username had been existed!")
 			return
 		}
@@ -73,7 +74,7 @@ GoAgenda register -u username -p password -e email -t telephone
 			Email : email,
 			Tel : telephone,
 		}
-		entity.UserModel.AddUser(userinfo)
+		service.UserModel.AddUser(userinfo)
 	},
 }
 

@@ -7,11 +7,9 @@ import (
 	"encoding/json"
 )
 
-type UserData entity.UserData
-
 //用户数据结构
 type UserList struct{
-	Users []UserData `json:"users"`
+	Users []entity.UserData `json:"users"`
 }
 
 
@@ -23,17 +21,17 @@ func init() {
 }
 
 //通过名字获得用户
-func (u *UserList)GetUserByName(username string) UserData{
+func (u *UserList)GetUserByName(username string) entity.UserData{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return user
 		}
 	}
-	return UserData{}
+	return entity.UserData{}
 }
 
 //获取所有用户
-func (u *UserList)GetAllUsers() []UserData{
+func (u *UserList)GetAllUsers() []entity.UserData{
 	return u.Users
 }
 
@@ -58,7 +56,7 @@ func (u *UserList)MatchPass(username, password string) bool{
 }
 
 //添加一个用户
-func (u *UserList)AddUser(userinfo UserData) {
+func (u *UserList)AddUser(userinfo entity.UserData) {
 	u.Users = append(u.Users, userinfo)
 	u.saveToFile()
 }
