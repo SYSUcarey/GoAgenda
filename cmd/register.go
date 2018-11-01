@@ -61,7 +61,7 @@ GoAgenda register -u username -p password -e email -t telephone
 		}	
 		// 3. 参数逻辑合法性判断
 		// 注册用户名不允许重复
-		if entity.User_Model.IsExist(username) {
+		if entity.UserModel.IsExist(username) {
 			fmt.Println("GoAgenda register failed: username had been existed!")
 			return
 		}
@@ -78,7 +78,7 @@ GoAgenda register -u username -p password -e email -t telephone
 			Email : email,
 			Tel : telephone,
 		}
-		entity.User_Model.AddUser(userinfo)
+		entity.UserModel.AddUser(userinfo)
 	},
 }
 

@@ -15,15 +15,15 @@ type UserData struct{
 }
 
 //用户数据结构
-type UserModel struct{
+type UserList struct{
 	Users []UserData `json:"users"`
 }
 
-var User_Model UserModel
-const fileName string = "./data/users.json"
+var UserModel UserList
+const fileName string = "../data/users.json"
 
 //通过名字获得用户
-func (u *UserModel)GetUserByName(username string) UserData{
+func (u *UserList)GetUserByName(username string) UserData{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return user
@@ -33,12 +33,12 @@ func (u *UserModel)GetUserByName(username string) UserData{
 }
 
 //获取所有用户
-func (u *UserModel)GetAllUsers() []UserData{
+func (u *UserList)GetAllUsers() []UserData{
 	return u.Users
 }
 
 //用户是否存在
-func (u *UserModel)IsExist(username string) bool{
+func (u *UserList)IsExist(username string) bool{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return true
@@ -48,7 +48,7 @@ func (u *UserModel)IsExist(username string) bool{
 }
 
 //密码是否正确
-func (u *UserModel)MatchPass(username, password string) bool{
+func (u *UserList)MatchPass(username, password string) bool{
 	for _, user := range u.Users {
 		if user.Name == username {
 			return user.Password == password
@@ -58,13 +58,13 @@ func (u *UserModel)MatchPass(username, password string) bool{
 }
 
 //添加一个用户
-func (u *UserModel)AddUser(userinfo UserData) {
+func (u *UserList)AddUser(userinfo UserData) {
 	u.Users = append(u.Users, userinfo)
 	u.saveToFile()
 }
 
 //删除一个用户
-func (u *UserModel)DeleteUser(username string) bool{
+func (u *UserList)DeleteUser(username string) bool{
 	for i, user := range u.Users {
 		if user.Name == username {
 			u.Users = append(u.Users[:i], u.Users[i+1:]...)
@@ -76,11 +76,11 @@ func (u *UserModel)DeleteUser(username string) bool{
 }
 
 func init() {
-	User_Model.readFromFile()
+	UserModel.readFromFile()
 }
 
-func (u *UserModel)saveToFile() {
-	//UserModel转json格式数据
+func (u *UserList)saveToFile() {
+	//UserList转json格式数据
 	data, err := json.Marshal(*u)
 	if (err != nil) {
 		log.Fatal(err)
@@ -97,7 +97,7 @@ func (u *UserModel)saveToFile() {
 	}
 }
 
-func (u *UserModel)readFromFile() {
+func (u *UserList)readFromFile() {
 	//判断文件是否存在
 	_, err := os.Stat(fileName)
 	if os.IsNotExist(err) {
@@ -114,7 +114,7 @@ func (u *UserModel)readFromFile() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//解析json数据到UserModel
+	//解析json数据到UserList
 	err = json.Unmarshal(data[:total], u)
 	if err != nil {
         log.Fatal(err)
