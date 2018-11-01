@@ -77,6 +77,8 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 			return
 		}
 		// 3.参数逻辑性判断
+		// 会议标题不能重复
+		// todo
 		// 参与者必须是一个用户
 		is_participator_a_user := true
 		// 读取users.json判断是否存在这样一个用户
@@ -85,6 +87,12 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 			fmt.Println("GoAgend cm failed: participator is not a user!")
 			return
 		}
+		// 用户必须在会议时间有空
+		// 读取meetings.json，遍历用户的所有会议时间，不能有冲突
+		// todo
+		// 参与者必须在会议时间有空
+		// 读取meetings.json，遍历参与者的所有会议时间，不能有冲突
+		// todo
 		// 结束时间一定要在开始时间之后
 		is_endtime_after_starttime := end.After(start)
 		if !is_endtime_after_starttime {
@@ -98,8 +106,7 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 			fmt.Println("GoAgenda cm failed: starttime must be after current time!")
 			return
 		}
-		// 会议标题不能重复
-		// todo
+	
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
