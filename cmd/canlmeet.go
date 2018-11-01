@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -22,16 +22,30 @@ GoAgenda canlmeet -t title -p password
 		password, _ := cmd.Flags().GetString("password")
 		//处理参数
 		if title == "" {
-			fmt.Println("title cannot be null" + title)
+			fmt.Println("title cannot be null")
 			return
 		}		
-		fmt.Println("title: " + title)
+		fmt.Println("title: " , title)
 
 		if password == "" {
-			fmt.Println("password cannot be null" + title)
+			fmt.Println("password cannot be null")
 			return
 		}	
-		fmt.Println("password: " + password)
+		fmt.Println("password: " , password)
+
+		/*
+		 * 合法性判断
+		 * 1.是否登录
+		 * 2.会议是否存在
+		 * 3.密码是否正确	
+		 */
+
+		curStatus := entity.CurStatus.GetStatus()
+		// 1.是否登录		
+		
+		// 2.会议是否存在
+
+		// 3.密码是否正确
 	},
 }
 
