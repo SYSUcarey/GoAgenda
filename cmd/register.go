@@ -26,7 +26,7 @@ GoAgenda register -u username -p password -e email -t telephone
 		 * 3. 参数逻辑合法性判断
 		 */
 		// 1.登陆与否判断
-		has_login := false
+		has_login := entity.CurStatus.GetStatus().Islogin
 		// 读取status.json判断是否已经登陆
 		// todo
 		// 已经登陆无法进行注册命令

@@ -15,7 +15,7 @@ GoAgenda qryuser
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// 登陆与否判断
-		has_login := true
+		has_login := entity.CurStatus.GetStatus().Islogin
 		// 读取status.json判断是否已经登陆
 		// todo
 		// 已经登陆无法进行注册命令

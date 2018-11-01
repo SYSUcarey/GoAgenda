@@ -29,7 +29,7 @@ GoAgenda login -u username -p password
 		 * 3. 参数逻辑合法性判断
 		 */
 		// 1.登陆与否判断
-		has_login := false
+		has_login := entity.CurStatus.GetStatus().Islogin
 		// 读取status.json判断是否已经登陆
 		// todo
 		// 已经登陆无法进行注册命令
@@ -66,11 +66,12 @@ GoAgenda login -u username -p password
 		/*
 		 * 参数格式、逻辑合法后的响应处理
 		 * 1. status.json添加一个用户
-		 * todo
 		 */	
 		fmt.Println("GoAgenda login succeed: ")
 		fmt.Println("username: " + username)
 		fmt.Println("password: " + password)
+
+		entity.CurStatus.LogIn(username, password)
 
 	},
 }

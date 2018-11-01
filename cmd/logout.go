@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +16,7 @@ GoAgenda logout
 	Run: func(cmd *cobra.Command, args []string) {
 		
 		// 登陆与否判断
-		has_login := true
+		has_login := entity.CurStatus.GetStatus().Islogin
 		// 读取status.json判断是否已经登陆
 		// todo
 		// 已经登陆无法进行注册命令
@@ -30,7 +30,8 @@ GoAgenda logout
 		 * 1. status.json减少一个用户
 		 * 
 		 */	
-		fmt.Println("GoAgenda logout succeed: ")
+		fmt.Println("GoAgenda logout succeed! ")
+		entity.CurStatus.LogOut()
 	},
 }
 
