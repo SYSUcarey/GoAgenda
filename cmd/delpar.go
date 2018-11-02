@@ -54,6 +54,10 @@ GoAgenda delpar -t title -p participator
 
 		service.MeetingModel.RemoveMeetingParticipator(entity.CurStatus.UserName, title, participator)
 
+		if len(service.MeetingModel.GetMeeting(title).GetParticipator()) == 0 {
+			service.MeetingModel.CancelMeeting(title)
+		}
+
 		fmt.Println("GoAgenda addpar succeed: ")
 		fmt.Println("title: ", title)
 		fmt.Println("participator: ", participator)
