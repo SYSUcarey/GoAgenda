@@ -87,14 +87,14 @@ GoAgenda qrymeet -s starttime -e endtime
 		// 参数合法
 		fmt.Println("GoAgenda qrymeet succeed")
 		meetingList := service.MeetingModel.MeetingQuery(curStatus.UserName, starttime, endtime)
-		fmt.Println("There are ", len(meetingList), "meeting you sponsor or participate:")
+		fmt.Println("There are", len(meetingList), "meeting(s) you sponsor or participate:")
 		for i,meeting := range meetingList {
-			fmt.Println("Meeting ", i + 1)
-			fmt.Println("Title: ",meeting.GetTitle())
-			fmt.Println("Sponsor: ",meeting.GetSponsor())
-			fmt.Println("Participators: ",meeting.GetParticipator())
-			fmt.Println("Start: ",meeting.GetStartDate())
-			fmt.Println("End: ",meeting.GetEndDate())
+			fmt.Println("Meeting", i + 1)
+			fmt.Println("Title:",meeting.GetTitle())
+			fmt.Println("Sponsor:",meeting.GetSponsor())
+			fmt.Println("Participators:",meeting.GetParticipator())
+			fmt.Println("Start:",meeting.GetStartDate())
+			fmt.Println("End:",meeting.GetEndDate())
 		}
 	},
 }
