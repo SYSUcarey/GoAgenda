@@ -156,12 +156,12 @@ func (m *MeetingList) CancelMeeting(title string) {
  * @return if success, true will be returned
  */
 func (m *MeetingList) EmptyMeeting(userName string) {
-	for i, meeting := range m.Meetings {
+	for _, meeting := range m.Meetings {
 		if meeting.Sponsor == userName {
-			m.Meetings = append(m.Meetings[:i], m.Meetings[i+1:]...)
-			m.saveToFile()
+			m.CancelMeeting(meeting.Title)
 		}
 	}
+	m.saveToFile()
 }
 func (m *MeetingList) saveToFile() {
 	//MeetingList转json格式数据
