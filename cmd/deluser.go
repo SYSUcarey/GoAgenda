@@ -25,6 +25,8 @@ GoAgenda deluser -p password
 		 * 2. 参数格式合法性判断
 		 * 3. 参数逻辑合法性判断
 		 */
+
+		
 		// 1.登陆与否判断
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
@@ -58,9 +60,18 @@ GoAgenda deluser -p password
 		 * 5.IO处理
 		 */	
 
+		curStatus := entity.CurStatus.GetStatus()
 		// 1.清空用户创建的会议
+		service.MeetingModel.EmptyMeeting(curStatus.UserName)
 		
 		// 2.退出用户参与的会议		
+		// 获取所有会议
+		meetingList := service.MeetingModel.Meetings
+		for _, meeting := range meetingList {
+			if meeting.IsParticipator(curStatus.UserName) {
+				service.MeetingModel.RemoveMeetingParticipator(meeting.Sponsor, meeting.Title, curStatus.UserName)
+			}
+		}
 
 		// 3.删除当前用户
 		service.UserModel.DeleteUser(username)
