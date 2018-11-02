@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +24,32 @@ GoAgenda emptymeet -p password
 			fmt.Println("password cannot be null")
 			return
 		}
-		fmt.Println("password: " + password)		
+		fmt.Println("password: " + password)
+		
+		/*
+		 * 合法性判断
+		 * 1.是否登录
+		 * 2.密码是否正确  
+		 */ 
+
+		curStatus := entity.CurStatus.GetStatus()
+
+		// 1.是否登录
+		has_login := curStatus.Islogin
+		if !has_login {
+			fmt.Println("GoAgenda emptymeet failed: You did not login yet!")
+			return
+		}
+
+		// 2.密码是否正确
+		if password != curStatus.Password {
+			fmt.Println("GoAgenda emptymeet failed: Invalid password!")
+			return
+		}
+
+		// 参数合法
+		fmt.Println("GoAgenda emptymeet succeed!")
+		service.MeetingModel.EmptyMeeting(curStatus.UserName)
 	},
 }
 
