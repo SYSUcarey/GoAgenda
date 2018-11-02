@@ -51,15 +51,24 @@ GoAgenda deluser -p password
 
 		/*
 		 * 参数格式、逻辑合法后的响应处理
-		 * 1. users.json delete当前用户
-		 * 2. status.json 登出状态
-		 * 3. IO处理
+		 * 1.清空用户创建的会议 
+		 * 2.退出用户参与的会议 
+		 * 3.users.json delete当前用户
+		 * 4.status.json 登出状态   
+		 * 5.IO处理
 		 */	
-		// 删除当前用户
+
+		// 1.清空用户创建的会议
+		
+		// 2.退出用户参与的会议		
+
+		// 3.删除当前用户
 		service.UserModel.DeleteUser(username)
-		// 登出系统
+		
+		// 4.登出系统
 		entity.CurStatus.LogOut()
-		// IO提示处理
+		
+		// 5.IO提示处理
 		fmt.Println("GoAgenda deluser succeed: ")
 		fmt.Println("password: " + password)
 
