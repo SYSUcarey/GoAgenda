@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
+	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
 )
 
@@ -28,7 +29,7 @@ GoAgenda logout
 		 * 1. status.json登出状态
 		 * 2. IO提示
 		 */	
-		fmt.Println("GoAgenda logout succeed! ")
+		service.Error.Println("GoAgenda logout succeed! ")
 		entity.CurStatus.LogOut()
 	},
 }

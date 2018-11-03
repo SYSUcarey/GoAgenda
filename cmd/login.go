@@ -33,7 +33,7 @@ GoAgenda login -u username -p password
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
 		if has_login {
-			fmt.Println("GoAgenda login failed: You had already logined!")
+			service.Error.Println("GoAgenda login failed: You had already logined!")
 			return
 		}
 
