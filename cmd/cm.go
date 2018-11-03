@@ -37,54 +37,59 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 未登陆的响应处理
 		if !has_login {
-			fmt.Println("GoAgenda cm failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: You did not login yet!")
 			return
 		}
 		// 2. 参数格式合法性判断
 		// 标题不能为空
 		if title == "" {
-			fmt.Println("GoAgenda cm failed: title cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: title cannot be null")
 			return
 		}
 		// 参与者不能为空
 		if participator == "" {
-			fmt.Println("GoAgenda cm failed: participator cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: participator cannot be null")
 			return
 		}
 		// 起始时间不能为空
 		if starttime == "" {
-			fmt.Println("GoAgenda cm failed: starttime cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: starttime cannot be null")
 			return
 		}
 		// 结束时间不能为空
 		if endtime == "" {
-			fmt.Println("GoAgenda cm failed: endtime cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: endtime cannot be null")
 			return
 		}
 		// 起始结束时间必须合法（Format: "2006-01-02/15:04:05"）
 		start, err_starttime_format_invalid := time.Parse("2006-01-02/15:04:05", starttime)
 		if err_starttime_format_invalid != nil {
-			fmt.Println("GoAgenda cm failed: starttime invalid!")
-			fmt.Println("GoAgenda cm: starttime must be in format \"2006-01-02/15:04:05\"!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: starttime invalid!")
+			fmt.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm: starttime must be in format \"2006-01-02/15:04:05\"!")
 			fmt.Println(err_starttime_format_invalid)
 			return
 		}
 		end, err_endtime_format_invalid := time.Parse("2006-01-02/15:04:05", endtime)
 		if err_endtime_format_invalid != nil {
-			fmt.Println("GoAgenda cm failed: endtime invalid!")
-			fmt.Println("GoAgenda cm: endtime must be in format \"2006-01-02/15:04:05\"!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: endtime invalid!")
+			fmt.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm: endtime must be in format \"2006-01-02/15:04:05\"!")
 			fmt.Println(err_endtime_format_invalid)
 			return
 		}
 		// 3.参数逻辑性判断
 		// 会议标题不能重复
 		if service.MeetingModel.IsExist(title) {
-			fmt.Println("GoAgenda cm failed: title repeated!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: title repeated!")
 			return
 		}
 		// 参与者必须是一个用户
 		if !service.UserModel.IsExist(participator) {
-			fmt.Println("GoAgend cm failed: participator is not a user!")
+			service.Error.Println("GoAgend " + entity.CurStatus.GetStatus().UserName + "  cm failed: participator is not a user!")
+			return
+		}
+		// 参与者不能是发起者
+		if participator == entity.CurStatus.GetStatus().UserName {
+			service.Error.Println("GoAgend " + entity.CurStatus.GetStatus().UserName + "  cm failed: participator can not be sponsor!")
 			return
 		}
 		// 用户必须在会议时间有空
@@ -96,14 +101,14 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		// 结束时间一定要在开始时间之后
 		is_endtime_after_starttime := end.After(start)
 		if !is_endtime_after_starttime {
-			fmt.Println("GoAgenda cm failed: endtime must be after starttime!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: endtime must be after starttime!")
 			return
 		}
 		// 开始时间一定要在当前时间之后
 		currenttime := time.Now()
 		is_starttime_after_currenttime := start.After(currenttime)
 		if !is_starttime_after_currenttime {
-			fmt.Println("GoAgenda cm failed: starttime must be after current time!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: starttime must be after current time!")
 			return
 		}
 	
@@ -116,13 +121,9 @@ GoAgenda cm -t title -p participator -s starttime -e endtime
 		var participators = []string{}
 		participators = append(participators, participator)
 		if service.MeetingModel.CreateMeeting(entity.CurStatus.GetStatus().UserName, title, starttime, endtime, participators) {
-			fmt.Println("GoAgenda cm succeed: ")
-			fmt.Println("title: " + title)
-			fmt.Println("participator: " + participator)
-			fmt.Println("starttime: " + starttime)
-			fmt.Println("endtime: " + endtime)
+			service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm succeed! ---title=" + title + "---participator=" + participator + "---starttime=" + starttime + "---endtime=" + endtime)
 		} else {
-			fmt.Println("GoAgenda cm failed: CreateMeeting failed!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  cm failed: CreateMeeting failed!")
 		}
 
 

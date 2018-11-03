@@ -24,16 +24,14 @@ GoAgenda qrymeet -s starttime -e endtime
 		endtime, _ := cmd.Flags().GetString("end")
 		//处理参数		
 		if starttime == "" {
-			fmt.Println("starttime cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: starttime cannot be null")
 			return
 		}
-		fmt.Println("starttime: " + starttime)
 
 		if endtime == "" {
-			fmt.Println("endtime cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: endtime cannot be null")
 			return
 		}
-		fmt.Println("endtime: " + endtime)
 
 		/*
 		 * 合法性判断
@@ -48,23 +46,23 @@ GoAgenda qrymeet -s starttime -e endtime
 		// 1.是否登录
 		has_login := curStatus.Islogin
 		if !has_login {
-			fmt.Println("GoAgenda qrymeet failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: You did not login yet!")
 			return
 		}
 
 		// 2.时间格式是否合法
 		start, err_starttime_format_invalid := time.Parse("2006-01-02/15:04:05", starttime)
 		if err_starttime_format_invalid != nil {
-			fmt.Println("GoAgenda qrymeet failed: starttime invalid!")
-			fmt.Println("GoAgenda qrymeet: starttime must be in format \"2006-01-02/15:04:05\"!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: starttime invalid!")
+			fmt.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet: starttime must be in format \"2006-01-02/15:04:05\"!")
 			fmt.Println(err_starttime_format_invalid)
 			return
 		}
 
 		end, err_endtime_format_invalid := time.Parse("2006-01-02/15:04:05", endtime)
 		if err_endtime_format_invalid != nil {
-			fmt.Println("GoAgenda qrymeet failed: endtime invalid!")
-			fmt.Println("GoAgenda qrymeet: endtime must be in format \"2006-01-02/15:04:05\"!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: endtime invalid!")
+			fmt.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet: endtime must be in format \"2006-01-02/15:04:05\"!")
 			fmt.Println(err_endtime_format_invalid)
 			return
 		}
@@ -72,7 +70,7 @@ GoAgenda qrymeet -s starttime -e endtime
 		// 3.开始时间是否小于结束时间
 		is_endtime_after_starttime := end.After(start)
 		if !is_endtime_after_starttime {
-			fmt.Println("GoAgenda qrymeet failed: endtime must be after starttime!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: endtime must be after starttime!")
 			return
 		}
 
@@ -80,12 +78,12 @@ GoAgenda qrymeet -s starttime -e endtime
 		currenttime := time.Now()
 		is_starttime_after_currenttime := start.After(currenttime)
 		if !is_starttime_after_currenttime {
-			fmt.Println("GoAgenda qrymeet failed: starttime must be after current time!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet failed: starttime must be after current time!")
 			return
 		}
 
 		// 参数合法
-		fmt.Println("GoAgenda qrymeet succeed")
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qrymeet succeed!")
 		meetingList := service.MeetingModel.MeetingQuery(curStatus.UserName, starttime, endtime)
 		fmt.Println("There are", len(meetingList), "meeting(s) you sponsor or participate:")
 		for i,meeting := range meetingList {

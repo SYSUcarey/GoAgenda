@@ -28,27 +28,27 @@ GoAgenda delpar -t title -p participator
 
 		//参数格式处理
 		if title == "" {
-			fmt.Println("GoAgenda delpar failed: title cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  delpar failed: title cannot be null")
 			return
 		}
 
 		if participator == "" {
-			fmt.Println("GoAgenda delpar failed: participator cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  delpar failed: participator cannot be null")
 			return
 		}
 		// 参数逻辑合法性判断
 		if !(service.MeetingModel.GetMeeting(title).GetSponsor() == entity.CurStatus.UserName) {
-			fmt.Println("GoAgenda delpar failed: you must be the sponsor of the meeting")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  delpar failed: you must be the sponsor of the meeting")
 			return
 		} // 当前用户必须是该会议的发起者
 
 		if !service.MeetingModel.IsExist(title) {
-			fmt.Println("GoAgenda delpar failed: this string is not one of meeting's title")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  delpar failed: this string is not one of meeting's title")
 			return
 		} // 必须存在有这个标题的会议
 
 		if !service.MeetingModel.GetMeeting(title).IsParticipator(participator) {
-			fmt.Println("GoAgenda delpar failed: participator is not in the meeting")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  delpar failed: participator is not in the meeting")
 			return
 		} // 会议中有这个参与者
 
@@ -58,7 +58,7 @@ GoAgenda delpar -t title -p participator
 			service.MeetingModel.CancelMeeting(title)
 		}
 
-		fmt.Println("GoAgenda addpar succeed: ")
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  addpar succeed!---title=" + title, "---participator=" + participator)
 		fmt.Println("title: ", title)
 		fmt.Println("participator: ", participator)
 	},

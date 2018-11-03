@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
 	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
@@ -23,16 +22,14 @@ GoAgenda canlmeet -t title -p password
 		password, _ := cmd.Flags().GetString("password")
 		//处理参数
 		if title == "" {
-			fmt.Println("title cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: title cannot be null")
 			return
 		}		
-		fmt.Println("title: " , title)
 
 		if password == "" {
-			fmt.Println("password cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: password cannot be null")
 			return
 		}	
-		fmt.Println("password: " , password)
 
 		/*
 		 * 合法性判断
@@ -46,7 +43,7 @@ GoAgenda canlmeet -t title -p password
 		// 1.是否登录		
 		has_login := curStatus.Islogin
 		if !has_login {
-			fmt.Println("GoAgenda canlmeet failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: You did not login yet!")
 			return
 		}
 				
@@ -54,7 +51,7 @@ GoAgenda canlmeet -t title -p password
 		// 2.会议是否存在
 		exist := meetingList.IsExist(title)
 		if !exist {
-			fmt.Println("GoAgenda canlmeet failed: Meeting does not exist!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: Meeting does not exist!")
 			return
 		}
 		
@@ -62,18 +59,18 @@ GoAgenda canlmeet -t title -p password
 		meeting := meetingList.GetMeeting(title)
 		user := curStatus.UserName
 		if user != meeting.GetSponsor() {
-			fmt.Println("GoAgenda canlmeet failed: You are not the sponsor!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: You are not the sponsor!")
 			return
 		}
 
 		// 4.密码是否正确
 		if password != curStatus.Password {
-			fmt.Println("GoAgenda canlmeet failed: Invalid password!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet failed: Invalid password!")
 			return
 		}
 
 		meetingList.CancelMeeting(title)
-		fmt.Println("GoAgenda canlmeet succeed!")
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  canlmeet succeed! ---title=" + title)
 	},
 }
 
