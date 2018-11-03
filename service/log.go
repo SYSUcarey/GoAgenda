@@ -36,8 +36,8 @@ func init() {
 	}
 	fileAndStdoutWriter1 = io.MultiWriter(infowriter...)
 	fileAndStdoutWriter2 = io.MultiWriter(errwriter...)
-	Info =  log.New(fileAndStdoutWriter2, "ERROR: ", log.Ldate | log.Ltime | log.Lshortfile)
-	Error = log.New(fileAndStdoutWriter2, "INFO: ", log.Ldate | log.Ltime | log.Lshortfile)
+	Info =  log.New(fileAndStdoutWriter1, "Info: ", log.Ldate | log.Ltime)
+	Error = log.New(fileAndStdoutWriter2, "Error: ", log.Ldate | log.Ltime)
 }
 
 func getLogFile(logPath string) *os.File  {
