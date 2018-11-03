@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/chenf99/GoAgenda/service"
 	"github.com/chenf99/GoAgenda/entity"
 	"github.com/spf13/cobra"
@@ -31,14 +30,14 @@ GoAgenda deluser -p password
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
 		if !has_login {
-			fmt.Println("GoAgenda deluser failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  deluser failed: You did not login yet!")
 			return
 		}
 
 		// 2. 参数格式合法性判断
 		// 密码为空
 		if	password == "" {
-			fmt.Println("GoAgenda deluser failed: password cannot be null")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  deluser failed: password cannot be null")
 			return
 		}
 
@@ -46,7 +45,7 @@ GoAgenda deluser -p password
 		// 当前用户名与密码参数是否匹配
 		username := entity.CurStatus.GetStatus().UserName
 		if !service.UserModel.MatchPass(username, password) {
-			fmt.Println("GoAgenda deluser failed: username does not match password!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  deluser failed: username does not match password!")
 			return
 		}
 		
@@ -80,8 +79,7 @@ GoAgenda deluser -p password
 		entity.CurStatus.LogOut()
 		
 		// 5.IO提示处理
-		fmt.Println("GoAgenda deluser succeed: ")
-		fmt.Println("password: " + password)
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  deluser succeed!")
 
 	},
 }

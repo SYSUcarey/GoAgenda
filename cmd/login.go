@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
 	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
@@ -33,31 +32,31 @@ GoAgenda login -u username -p password
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
 		if has_login {
-			service.Error.Println("GoAgenda login failed: You had already logined!")
+			service.Error.Println("GoAgenda " + username + "  login failed: You had already logined!")
 			return
 		}
 
 		// 2. 参数格式合法性判断
 		// 用户名为空
 		if	username == "" {
-			fmt.Println("GoAgenda login failed: username cannot be null")
+			service.Error.Println("GoAgenda " + username + "  login failed: username cannot be null")
 			return
 		}
 		// 密码为空
 		if	password == "" {
-			fmt.Println("GoAgenda login failed: password cannot be null")
+			service.Error.Println("GoAgenda " + username + "  login failed: password cannot be null")
 			return
 		}
 
 		// 3. 参数逻辑合法性判断
 		// 登陆用户名必须存在
 		if !service.UserModel.IsExist(username) {
-			fmt.Println("GoAgenda login failed: username does not exist!")
+			service.Error.Println("GoAgenda " + username + "  login failed: username does not exist!")
 			return
 		}
 		// 用户名和密码必须匹配
 		if !service.UserModel.MatchPass(username, password) {
-			fmt.Println("GoAgenda login failed: username does not match password!")
+			service.Error.Println("GoAgenda " + username + "  login failed: username does not match password!")
 			return
 		}
 		
@@ -65,13 +64,12 @@ GoAgenda login -u username -p password
 		/*
 		 * 参数格式、逻辑合法后的响应处理
 		 * 1. status.json添加登陆状态
-		 * 2. IO提示
+		 * 2. 写入日志并UI提示
 		 */	
-		fmt.Println("GoAgenda login succeed: ")
-		fmt.Println("username: " + username)
-		fmt.Println("password: " + password)
-
+		
 		entity.CurStatus.LogIn(username, password)
+		service.Info.Println("GoAgenda " + username + "  login succeed!")
+
 
 	},
 }

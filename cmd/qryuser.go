@@ -19,16 +19,16 @@ GoAgenda qryuser
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
 		if !has_login {
-			fmt.Println("GoAgenda qryuser failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qryuser failed: You did not login yet!")
 			return
 		}
 
 		/*
 		 * 状态、参数格式、逻辑合法后的响应处理
 		 * 1. 读取users.json，获得用户列表
-		 * 2. IO提示
+		 * 2. 写入日志并UI提示
 		 */	
-		fmt.Println("GoAgenda qryuser succeed: ")
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  qryuser succeed!")
 		user_list := service.UserModel.GetAllUsers()
 		fmt.Println("There are ", len(user_list), " users!")
 		fmt.Println("Name-Email-Telephone")

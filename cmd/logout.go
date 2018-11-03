@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/chenf99/GoAgenda/entity"
 	"github.com/chenf99/GoAgenda/service"
 	"github.com/spf13/cobra"
@@ -20,16 +19,16 @@ GoAgenda logout
 		has_login := entity.CurStatus.GetStatus().Islogin
 		// 已经登陆无法进行注册命令
 		if !has_login {
-			fmt.Println("GoAgenda logout failed: You did not login yet!")
+			service.Error.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  logout failed: You did not login yet!")
 			return
 		}
 
 		/*
 		 * 状态、参数格式、逻辑合法后的响应处理
 		 * 1. status.json登出状态
-		 * 2. IO提示
+		 * 2. 写入日志并UI提示
 		 */	
-		service.Error.Println("GoAgenda logout succeed! ")
+		service.Info.Println("GoAgenda " + entity.CurStatus.GetStatus().UserName + "  logout succeed! ")
 		entity.CurStatus.LogOut()
 	},
 }
