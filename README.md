@@ -7,7 +7,7 @@
 
 ## 使用方法
 
-需要安装好Golang并配置好GoPath
+需要安装好Golang并配置好GoPath，同时需要下载cobra
 
 ### 下载
 
