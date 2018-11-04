@@ -20,3 +20,5 @@
 之后就可以直接通过GoAgenda来启动CLI(需配置$GOBIN)
 
 ## 测试案例
+
+[cmd-test](docs/cmd-test.md)
